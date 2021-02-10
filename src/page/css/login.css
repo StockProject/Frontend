@@ -1,0 +1,98 @@
+html,
+body,
+#root{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.rootContainer{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+/* login */
+.boxContainer{
+display: flex;
+flex-direction: column;
+max-width: 24em;
+min-width: 21em;
+box-shadow: 0px 0px 20px 0px rgba(15, 15, 15, 0.2);
+border-radius: 6px;
+padding: 24px;
+}
+
+.header{
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 3em;
+}
+
+.inputGroup{
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.loginInput{
+  height: 2.1em;
+  border-radius: 3px;
+  border: 1px solid #70a1ff;
+  transition: border 0.4s ease-out;
+  padding: 5px;
+  font-family: Oxygen, sans-serif;
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 5px;
+}
+.loginBtn{
+  border: none;
+  color:white;
+  font-size: 15px;
+  font-family: Oxygen, sans-serif;
+  border-radius: 4px;
+  background-color: #70a1ff;
+  height: 3.1em;
+  width:100%;
+  margin-top: 50px;
+  cursor:pointer;
+}
+
+.controller{
+  font-size: 14px;
+  margin-top: 20px;
+  padding: 5px;
+  margin-right: 80%;
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
+}
+
+/* Register */
+
+.innerGroup{
+  display: flex;
+  flex-direction: column;
+}
+.registerBtn{
+  border: none;
+  color:white;
+  font-size: 15px;
+  font-family: Oxygen, sans-serif;
+  border-radius: 4px;
+  background-color: #70a1ff;
+  height: 3.1em;
+  width:100%;
+  margin-top: 50px;
+  cursor:pointer;
+}
+.innerRadio{
+  margin-top: 20px;
+}
+.investType{
+  margin-left: 10px;
+}
