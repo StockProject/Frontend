@@ -8,15 +8,37 @@ class RegisterBox extends React.Component{
         this.state = {
             id:"",
             pw:"",
-            re_pw:"",
-            idCheck:""
+            email:"",
+            pwCheck:"",
+            idCheck:"",
+            investType:""
         };
     }
 
     submitRegister(e){
 
     }
-    
+    handleCangeID=(e)=>{
+        this.setState({
+            id:e.target.value
+        })
+    }
+
+    handleCangePassword=(e)=>{
+        this.setState({
+            pw:e.target.value
+        });
+    }
+    handleCangeInvestType=(e)=>{
+        this.setState({
+            investType:e.target.value
+        })
+    }
+    handleCangeEmail=(e)=>{
+        this.setState({
+            email:e.target.value
+        })
+    }
     render(){
         return(
             <div className = "rootContainer">
@@ -29,6 +51,8 @@ class RegisterBox extends React.Component{
                                 <input
                                     type ="text"
                                     name = "userID"
+                                    value={this.state.id}
+                                    onChange={this.handleCangeID}
                                     className = "loginInput"
                                     placeholder="ID"
                                     />
@@ -38,6 +62,8 @@ class RegisterBox extends React.Component{
                                 <input 
                                     type = "password"
                                     name = "userPW"
+                                    value={this.state.pw}
+                                    onChange={this.handleCangePassword}
                                     className = "loginInput"
                                     placeholder = "비밀번호 입력"
                                     />
@@ -47,6 +73,10 @@ class RegisterBox extends React.Component{
                                 <input 
                                     type = "password"
                                     name = "checkPW"
+                                    value = {this.state.pwCheck}
+                                    onChange={e=>this.setState({
+                                        pwCheck:e.target.value
+                                    })}
                                     className = "loginInput"
                                     placeholder = "비밀번호 입력"
                                     />
@@ -56,6 +86,8 @@ class RegisterBox extends React.Component{
                                 <input 
                                     type = "email"
                                     name = "userEmail"
+                                    value = {this.state.email}
+                                    onChange = {this.handleCangeEmail}
                                     className = "loginInput"
                                     placeholder = "Email"
                                     />
@@ -66,18 +98,21 @@ class RegisterBox extends React.Component{
                                     type = "radio"
                                     name = "investType"
                                     className = "investType"
+                                    onChange = {this.handleCangeInvestType}
                                     value = "장기"
                                     /> 장기
                                     <input
                                     type = "radio"
                                     name = "investType"
                                     className = "investType"
+                                    onChange = {this.handleCangeInvestType}
                                     value = "스윙"
                                     /> 스윙
                                     <input
                                     type = "radio"
                                     name = "investType"
                                     className = "investType"
+                                    onChange = {this.handleCangeInvestType}
                                     value = "단기"
                                     /> 단기
                             </div>
@@ -92,7 +127,7 @@ class RegisterBox extends React.Component{
                         </div>
                     </div>
                     
-                    <Link to="/auth/login" className="controller">회원가입</Link>
+                    <Link to="/auth/login" className="controller">로그인</Link>
                 
                 </div>
             </div>

@@ -2,18 +2,43 @@ import React from "react";
 import ReactDom from "react-dom";
 import '../css/login.css'
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 
 class LoginBox extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        id:'',
-        pw:''
+        id:"",
+        pw:""
       };
     } 
-    submitLogin(e){
-
+    submitLogin=(e)=>{
+        e.preventDefault();
+        {/*const {
+          id,
+          pw
+        } = this.state;
+      */}
+      axios({
+        url: 'https:localhost:4000/auth/login',
+        method: 'get',
+        data: {
+          id:this.id,
+          pw:this.pw
+        }
+      });
     }
+    handleCangeID=(e)=>{
+      this.setState({
+          id:e.target.value
+      })
+  }
+
+  handleCangePassword=(e)=>{
+    this.setState({
+        pw:e.target.value
+    });
+}
 
     render(){
         return(
@@ -28,6 +53,7 @@ class LoginBox extends React.Component {
                           type ="text"
                           name = "userID"
                           className="loginInput"
+                          onChange={this.handleCangeID}
                           placeholder ="아이디"
                           />
                       </div>
@@ -37,6 +63,7 @@ class LoginBox extends React.Component {
                           type = "password"
                           name = "userPW"
                           className = "loginInput"
+                          onChange={this.handleCangePassword}
                           placeholder="비밀번호"
                           />
                       </div>
@@ -50,7 +77,7 @@ class LoginBox extends React.Component {
                       
                   </div>
               </div>
-                    <Link to="/auth/register" className="controller">로그인</Link>
+                    <Link to="/auth/register" className="controller">회원가입</Link>
               
             </div>
           </div>
