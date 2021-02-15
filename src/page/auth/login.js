@@ -13,32 +13,38 @@ class LoginBox extends React.Component {
       };
     } 
     submitLogin=(e)=>{
-        e.preventDefault();
-        {/*const {
-          id,
-          pw
-        } = this.state;
+        {/*const option ={
+          url : '/auth/login',
+          method: 'POST',
+          header: {
+
+          },
+          data:{
+            id:this.id,
+            pw:this.pw
+          }
+        }  
+        axios(option).then(response => console.log(response))
       */}
-      axios({
-        url: 'https:localhost:4000/auth/login',
-        method: 'get',
-        data: {
-          id:this.id,
-          pw:this.pw
-        }
-      });
+    console.log(this.id)
     }
+
+
+
     handleCangeID=(e)=>{
       this.setState({
           id:e.target.value
       })
   }
 
+
+
   handleCangePassword=(e)=>{
     this.setState({
         pw:e.target.value
     });
 }
+
 
     render(){
         return(

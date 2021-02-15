@@ -2,43 +2,76 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import '../css/login.css'
 import { Link } from 'react-router-dom';
+import axios from 'axios'
+axios.defaults.withCredentials=true;
+
 class RegisterBox extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            id:"",
-            pw:"",
-            email:"",
+            userName:"",
+            userPassword:"",
+            userEmail:"",
             pwCheck:"",
             idCheck:"",
             investType:""
         };
     }
 
-    submitRegister(e){
-
+    submitRegister(dataTosubmit){
+           const request  = axios
+           .post("http://localhost:4000/auth/register", dataTosubmit,{withCredentials:true})
+           .then((response) => console.log(response.data))
     }
+
+
+
     handleCangeID=(e)=>{
+        e.preventDefault();
         this.setState({
-            id:e.target.value
+            userName:e.target.value
         })
+        user_id = this.state.userName;
+        
     }
 
     handleCangePassword=(e)=>{
+        e.preventDefault();
         this.setState({
-            pw:e.target.value
+            userPassword:e.target.value
         });
+        user_pw = this.state.userPassword
     }
     handleCangeInvestType=(e)=>{
+        e.preventDefault();
         this.setState({
             investType:e.target.value
         })
+        invest_type = this.state.investType
     }
     handleCangeEmail=(e)=>{
+        e.preventDefault();
         this.setState({
-            email:e.target.value
+            userEmail:e.target.value
         })
+        user_email = this.state.userEmail
     }
+
+    /*checkPW = (e) => {
+        e.preventDefault();
+        비밀번호 유효성검사(영문,숫자 혼합 6~20)
+        const chkPwd = function(str) {
+          if (this.state.pw === this.state.pwCheck) {
+            alert("일치합니다.");
+            this.setState({
+              pwCheck: this.state.pwCheck
+            });
+          } else {
+            alert("불일치합니다.");
+          }
+        }
+    */
+
     render(){
         return(
             <div className = "rootContainer">
@@ -120,7 +153,7 @@ class RegisterBox extends React.Component{
                             <button
                             type ="button"
                             className ="registerBtn"
-                            onClick ={this.submitRegister.bind(this)}
+                            onClick ={this.submitRegister(body)}
                             >
                                 회원가입
                             </button>
@@ -135,5 +168,15 @@ class RegisterBox extends React.Component{
     }
 
 }
+var user_id;
+var user_pw;
+var user_email;
+var invest_type;
 
+let body={
+    userName : user_id,
+    userPassword : user_pw,
+    userEmail : user_email,
+    investType : invest_type
+}
 export default RegisterBox;
