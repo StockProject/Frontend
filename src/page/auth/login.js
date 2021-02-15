@@ -3,37 +3,39 @@ import ReactDom from "react-dom";
 import '../css/login.css'
 import { Link } from 'react-router-dom';
 import axios from 'axios'
+axios.defaults.withCredentials=true;
 
 class LoginBox extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        id:"",
-        pw:""
+        userEmail:"",
+        userPassword:""
       };
     } 
-    submitLogin=(e)=>{
-        {/*const option ={
-          url : '/auth/login',
-          method: 'POST',
-          header: {
+    submitLogin=async(dataTosubmit)=>{
+      var res;
+      const request  = await axios
+          .post("http://localhost:4000/auth/login", dataTosubmit,{withCredentials:true})
+          .then((response) => res = response.data)
+      console.log(res);
+}
 
-          },
-          data:{
-            id:this.id,
-            pw:this.pw
-          }
-        }  
-        axios(option).then(response => console.log(response))
-      */}
-    console.log(this.id)
+    onSubmitHandler = (event) =>{
+      event.preventDefault();
+      this.submitLogin(this.hendleBody());
     }
-
-
+    hendleBody=()=>{
+      let body={
+          userEmail : this.state.userEmail,
+          userPassword : this.state.userPassword,
+      }
+      return body;
+  }
 
     handleCangeID=(e)=>{
       this.setState({
-          id:e.target.value
+          userEmail:e.target.value
       })
   }
 
@@ -41,13 +43,14 @@ class LoginBox extends React.Component {
 
   handleCangePassword=(e)=>{
     this.setState({
-        pw:e.target.value
+        userPassword:e.target.value
     });
 }
 
 
     render(){
         return(
+          <form onSubmit={this.onSubmitHandler}> 
           <div className = "rootContainer">
             <div className = "boxContainer">
               <div className = "innerConainer">
@@ -60,7 +63,7 @@ class LoginBox extends React.Component {
                           name = "userID"
                           className="loginInput"
                           onChange={this.handleCangeID}
-                          placeholder ="아이디"
+                          placeholder ="이메일(example@example.com)"
                           />
                       </div>
                       <div className ="inputGroup">
@@ -74,9 +77,8 @@ class LoginBox extends React.Component {
                           />
                       </div>
                       <button
-                      type ="button"
+                      type ="submit"
                       className ="loginBtn"
-                      onClick ={this.submitLogin.bind(this)}
                       >
                           로그인
                       </button>
@@ -87,6 +89,7 @@ class LoginBox extends React.Component {
               
             </div>
           </div>
+          </form>
         );
     }
 }
