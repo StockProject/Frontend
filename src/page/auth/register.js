@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import '../css/login.css'
 import { Link } from 'react-router-dom';
 import axios from 'axios'
@@ -21,15 +20,14 @@ class RegisterBox extends React.Component{
 
     submitRegister=async(dataTosubmit)=>{
             var res;
-            const request  = await axios
+            await axios
                 .post("http://localhost:4000/auth/register", dataTosubmit,{withCredentials:true})
                 .then((response) => res = response.data.success)
             if(res){
-                alert("회원가입에 성공하였습니다. 로그인 화면에서 로그인 해주세요.")
                 {<Link to="/auth/login" className="controller"></Link>}
+                alert("회원가입에 성공하였습니다. 로그인 화면에서 로그인 해주세요.")
             }
             else{
-                console.log("로그인 실패")
                 this.setState({
                     duplicateEmail:true
                 })
@@ -163,6 +161,7 @@ class RegisterBox extends React.Component{
         return(
             <form
                 onSubmit={this.onSubmitHandler}
+                className = "rootContainer"
             >
                 <div className = "rootContainer">
                     <div className = "boxContainer">

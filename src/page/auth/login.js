@@ -10,7 +10,9 @@ class LoginBox extends React.Component {
       super(props);
       this.state = {
         userEmail:"",
-        userPassword:""
+        userPassword:"",
+        check:false,
+        flag: true
       };
     } 
     submitLogin=async(dataTosubmit)=>{
@@ -18,7 +20,34 @@ class LoginBox extends React.Component {
       const request  = await axios
           .post("http://localhost:4000/auth/login", dataTosubmit,{withCredentials:true})
           .then((response) => res = response.data)
-      console.log(res);
+          console.log(res)
+          if(res === "잘못된 이메일입니다"){
+            this.setState({
+              check:true
+            })
+          }
+
+          else if(res === "잘못된 비밀번호입니다"){
+            this.setState({
+              check:true
+            })
+          }
+          else{
+            alert("로그인에 성공하였습니다.")
+          }
+}
+
+handleFlag(){        
+  if(this.state.userEmail!==""&&!this.state.userPassword!==""){
+   this.setState({
+      flag:false
+  })
+  }
+  else{
+    this.setState({
+      flag:false
+    })
+  }
 }
 
     onSubmitHandler = (event) =>{
@@ -28,29 +57,32 @@ class LoginBox extends React.Component {
     hendleBody=()=>{
       let body={
           userEmail : this.state.userEmail,
-          userPassword : this.state.userPassword,
+          userPassword : this.state.userPassword
       }
       return body;
   }
 
-    handleCangeID=(e)=>{
-      this.setState({
+    handleCangeID=async(e)=>{
+      await this.setState({
           userEmail:e.target.value
       })
+      await this.handleFlag()
   }
 
 
 
-  handleCangePassword=(e)=>{
-    this.setState({
+  handleCangePassword=async(e)=>{
+    await this.setState({
         userPassword:e.target.value
     });
+    await this.handleFlag()
 }
 
 
     render(){
         return(
-          <form onSubmit={this.onSubmitHandler}> 
+          <form onSubmit={this.onSubmitHandler}
+          className="rootContainer"> 
           <div className = "rootContainer">
             <div className = "boxContainer">
               <div className = "innerConainer">
@@ -76,9 +108,15 @@ class LoginBox extends React.Component {
                           placeholder="비밀번호"
                           />
                       </div>
+                      {this.state.check&&<div id = 'confirmEmail' style={{
+                                    color:'red',
+                                    fontSize:13,
+                                    marginLeft:"3px",
+                                    marginBottom:"4px"}}>이메일 혹은 비밀번호를 확인하세요</div>}
                       <button
                       type ="submit"
                       className ="loginBtn"
+                      disabled = {this.state.flag}
                       >
                           로그인
                       </button>
