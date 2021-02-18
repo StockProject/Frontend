@@ -12,8 +12,10 @@ class RegisterBox extends React.Component{
             userName:"",
             userPassword:"",
             userEmail:"",
+            investType:"",
+            duplicateEmail:false,
             pwCheck:"",
-            investType:""
+            flag: true
         };
     }
 
@@ -21,58 +23,20 @@ class RegisterBox extends React.Component{
             var res;
             const request  = await axios
                 .post("http://localhost:4000/auth/register", dataTosubmit,{withCredentials:true})
-                .then((response) => res = response.data)
-        console.log(res);
+                .then((response) => res = response.data.success)
+            if(res){
+                alert("회원가입에 성공하였습니다. 로그인 화면에서 로그인 해주세요.")
+                {<Link to="/auth/login" className="controller"></Link>}
+            }
+            else{
+                console.log("로그인 실패")
+                this.setState({
+                    duplicateEmail:true
+                })
+            }
     }
 
-    onSubmitHandler = (event) =>{
-        event.preventDefault();
-        this.submitRegister(this.hendleBody());
-    }
-
-
-    handleChangeName=(e)=>{
-        e.preventDefault();
-        this.setState({
-            userName:e.target.value
-        })
-    }
-
-    handleChangePassword=(e)=>{
-        e.preventDefault();
-        this.setState({
-            userPassword:e.target.value
-        });
-    }
-    handleChangeInvestType=(e)=>{
-        e.preventDefault();
-        this.setState({
-            investType:e.target.value
-        })
-    }
-    handleChangeEmail=(e)=>{
-        e.preventDefault();
-        this.setState({
-            userEmail:e.target.value
-        })
-    }
-
-    checkPW = (e) => {
-        e.preventDefault();
-        //비밀번호 유효성검사(영문,숫자 혼합 6~20)
-        const chkPwd = function(str) {
-          if (this.state.pw === this.state.pwCheck) {
-            alert("일치합니다.");
-            this.setState({
-              pwCheck: this.state.pwCheck
-            });
-          } else {
-            alert("불일치합니다.");
-          }
-        }
-    }
-
-    hendleBody=()=>{
+    handleBody=()=>{
         let body={
             userName : this.state.userName,
             userPassword : this.state.userPassword,
@@ -82,11 +46,124 @@ class RegisterBox extends React.Component{
         return body;
     }
 
+    onSubmitHandler = (event) =>{
+        event.preventDefault();
+        this.submitRegister(this.handleBody());
+    }
+
+
+    handleChangeName= async(e)=>{
+        e.preventDefault();
+        await this.setState({
+            userName:e.target.value
+        })
+        await this.handleFlag()
+    }
+
+    handleChangePassword=async(e)=>{
+        e.preventDefault();
+        await this.setState({
+            userPassword:e.target.value
+        });
+        await this.handleFlag()
+    }
+
+    handleChangeChackPassword=async(e)=>{
+        e.preventDefault();
+        await this.setState({
+            pwCheck:e.target.value
+        });
+        await this.handleFlag()
+    }
+
+    handleChangeInvestType=async(e)=>{
+        e.preventDefault();
+        await this.setState({
+            investType:e.target.value
+        })
+        await this.handleFlag()
+    }
+    handleChangeEmail=async(e)=>{
+        e.preventDefault();
+        await this.setState({
+            userEmail:e.target.value
+        })
+        await this.handleFlag()
+    }
+
+    confirmPW(){
+        //비밀번호 유효성검사(영문,숫자 혼합 6~20)
+        if(this.state.userPassword!==""&&this.state.pwCheck!==""){
+          if (this.state.userPassword === this.state.pwCheck) {
+            //const confirm = "일치"
+            return false;
+            /*this.setState({
+              pwCheck: this.state.pwCheck
+            });*/
+          } else {
+            //const unconfirm = "불일치"
+            return true;
+          }
+    }
+    else
+    {
+        return false;
+    }
+}
+
+    checkPW(){
+        if(this.state.userPassword!==""&&this.state.pwCheck!==""){
+            return true;
+        }
+    else{
+        return false;
+    }
+    }
+
+    checkID(){
+        if(this.state.userName!==""){
+                return true;
+            }
+        else{
+            return false;
+        }
+    }
+
+    checkEmail(){
+        if(this.state.userEmail!==""){
+                return true;
+            }
+        else{
+            return false;
+        }
+    }
+    checkInvestType(){
+        if(this.state.investType!==""){
+            return true;
+        }
+    else{
+        return false;
+        }
+    }
+    handleFlag(){        
+        if(!this.confirmPW()&&this.checkEmail()&&this.checkID()&&this.checkInvestType()){
+         this.setState({
+            flag:false
+        })
+    }
+        else{
+            this.setState({
+                flag:true
+            })
+        }
+    }
+
+    
     render(){
         return(
             <form
-                onSubmit={this.onSubmitHandler}>
-
+                onSubmit={this.onSubmitHandler}
+            >
                 <div className = "rootContainer">
                     <div className = "boxContainer">
                         <div className ="innerContainer">
@@ -114,6 +191,11 @@ class RegisterBox extends React.Component{
                                         placeholder = "example@example.com"
                                     />
                                 </div>
+                                {this.state.duplicateEmail&&<div id = 'confirmEmail' style={{
+                                    color:'red',
+                                    fontSize:13,
+                                    marginLeft:"3px",
+                                    marginBottom:"4px"}}>이미 가입된 이메일 입니다.</div>}
                                 <div className ="innerGroup">
                                     <label html = "userPW">비밀번호</label>
                                     <input
@@ -131,13 +213,12 @@ class RegisterBox extends React.Component{
                                         type = "password"
                                         name = "checkPW"
                                         value = {this.state.pwCheck}
-                                        onChange={e=>this.setState({
-                                            pwCheck:e.target.value
-                                        })}
+                                        onChange={this.handleChangeChackPassword}
                                         className = "loginInput"
                                         placeholder = "비밀번호 입력"
                                     />
                                 </div>
+                                {this.confirmPW()&&<div id = 'confirmPassword' style={{color:'red', fontSize:13,marginLeft:"3px"}}>비밀번호가 일치하지 않습니다.</div>}
                                 
                                 <div className ="innerRadio">
                                     <label html = "investType">투자성향:</label>
@@ -163,10 +244,10 @@ class RegisterBox extends React.Component{
                                         value = {3}
                                     /> 단기
                                 </div>
-
                                 <button
                                     type ="submit"
                                     className ="registerBtn"
+                                    disabled = {this.state.flag}
                                 >
                                     회원가입
                                 </button>
