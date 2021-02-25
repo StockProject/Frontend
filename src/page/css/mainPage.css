@@ -1,0 +1,49 @@
+.real_price_area{
+    padding: 120px;
+}
+.starImg{
+    width: 15px;
+    height: 15px;
+    display: block;
+    background-image: url('ClickStar.png');
+    background-position:center; 
+    background-repeat:no-repeat;
+    background-size: 15px 15px;
+    overflow: hidden;
+}
+
+.showPriceTable{
+    padding: 20px;
+    border-color: #e6e6e6;
+    background-color: #f4f4f4;
+}
+
+.table_st1{
+    width: 100%;
+}
+.stockTable{
+    background-color: white;
+    align-items: center;
+}
+.table_st1 th:first-child{
+    text-align: left;
+    padding-left: 30px;
+}
+.table_st1 td:first-child{
+    text-align: left;
+    padding-left: 30px;
+}
+.table_st1 thead th{
+    border-top: solid 1px #eee;
+    border-bottom: solid 1px #eee;
+}
+.table_st1 th{
+    font-weight: 200;
+    font-size: 14px;
+}
+th{
+    display: table-cell;
+}
+table{
+display: table;
+}
