@@ -1,21 +1,29 @@
 .real_price_area{
     padding: 120px;
+    width: 1200px;
 }
 .starImg{
     width: 15px;
     height: 15px;
     display: block;
     background-image: url('ClickStar.png');
-    background-position:center; 
+    background-position: 5px  center; 
     background-repeat:no-repeat;
     background-size: 15px 15px;
     overflow: hidden;
+    position: absolute;
+    padding-right: 20px;
+  
 }
 
 .showPriceTable{
-    padding: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     border-color: #e6e6e6;
     background-color: #f4f4f4;
+    
+    
+    
 }
 
 .table_st1{
@@ -23,7 +31,7 @@
 }
 .stockTable{
     background-color: white;
-    align-items: center;
+    
 }
 .table_st1 th:first-child{
     text-align: left;
@@ -31,19 +39,34 @@
 }
 .table_st1 td:first-child{
     text-align: left;
-    padding-left: 30px;
+    
 }
 .table_st1 thead th{
     border-top: solid 1px #eee;
     border-bottom: solid 1px #eee;
 }
-.table_st1 th{
+.table_st1 td{
+    width: auto;
+    margin: auto;
+    text-align: center;
+}
+.table_st1{
     font-weight: 200;
     font-size: 14px;
 }
 th{
     display: table-cell;
+    vertical-align: inherit;
+}
+td{
+    align-items: center;
 }
 table{
 display: table;
+}
+.sort_stockName_box{
+    position: relative;
+}
+p{
+    padding-left: 29px;
 }
